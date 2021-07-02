@@ -7,11 +7,18 @@ export class Counter extends Component {
     super(props);
     this.state = { currentCount: 0 };
     this.incrementCounter = this.incrementCounter.bind(this);
+    this.resetCounter = this.resetCounter.bind(this);
   }
 
   incrementCounter() {
     this.setState({
       currentCount: this.state.currentCount + 1
+    });
+  }
+
+  resetCounter() {
+    this.setState({
+      currentCount: 0
     });
   }
 
@@ -25,6 +32,7 @@ export class Counter extends Component {
         <p aria-live="polite">Current count: <strong>{this.state.currentCount}</strong></p>
 
         <button className="btn btn-primary" onClick={this.incrementCounter}>Increment</button>
+        <button className="btn btn-primary" onClick={this.resetCounter}>Reset</button>
       </div>
     );
   }
