@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Trips.Data;
 
@@ -17,8 +18,16 @@ namespace Trips.Controllers
         [HttpGet("[action]")]
         public IActionResult GetTrips()
         {
-            var allTrips = _service.GetAllTrips();
-            return Ok(allTrips);
+            try
+            {
+                var allTrips = _service.GetAllTrips();
+                return Ok(allTrips);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpGet("SingleTrip/{id}")]
@@ -29,9 +38,9 @@ namespace Trips.Controllers
         }
 
         [HttpPost("AddTrip")]
-        public IActionResult AddTrip([FromBody]Trip trip)
+        public IActionResult AddTrip([FromBody] Trip trip)
         {
-            if(trip != null)
+            if (trip != null)
             {
                 _service.AddTrip(trip);
             }
@@ -39,14 +48,15 @@ namespace Trips.Controllers
         }
 
         [HttpPut("UpdateTrip/{id}")]
-        public IActionResult UpdateTrip(int id, [FromBody]Trip trip)
+        public IActionResult UpdateTrip(int id, [FromBody] Trip trip)
         {
             _service.UpdateTrip(id, trip);
             return Ok(trip);
         }
 
         [HttpDelete("DeleteTrip/{id}")]
-        public IActionResult DeleteTrip(int id) {
+        public IActionResult DeleteTrip(int id)
+        {
             _service.DeleteTrip(id);
             return Ok();
         }
